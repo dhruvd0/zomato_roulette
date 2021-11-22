@@ -24,6 +24,7 @@ class _SearchRestState extends State<SearchRest> {
   Widget build(BuildContext context) {
     var width2 = MediaQuery.of(context).size.width;
     var height2 = MediaQuery.of(context).size.height;
+    int textBoxLength = restName.length * 30;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Container(
@@ -61,19 +62,19 @@ class _SearchRestState extends State<SearchRest> {
           Positioned(
             top: height2 / 2 - 70,
             child: Text(
-              "We will do the rest for you",
+              "We will do the rest for you :)",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),
           Positioned(
             bottom: 200,
             child: Container(
-              height: 100,
-              width: restName.length * 60 < 200 ? 200 : restName.length * 60,
+           
+              width: textBoxLength < 200 ? 200 : textBoxLength.toDouble(),
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.white),
                   borderRadius: BorderRadius.circular(20)),
-              padding: EdgeInsets.all(40),
+              padding: EdgeInsets.all(10),
               child: TextFormField(
                 textAlign: TextAlign.center,
                 initialValue: restName,
@@ -82,6 +83,13 @@ class _SearchRestState extends State<SearchRest> {
                     restName = str;
                   });
                 },
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                ),
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
