@@ -1,22 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flood_ml/views/enter_rest.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class GetStarted extends StatefulWidget {
-  const GetStarted({Key? key}) : super(key: key);
+class SearchRest extends StatefulWidget {
+  const SearchRest({Key? key}) : super(key: key);
 
   @override
-  State<GetStarted> createState() => _GetStartedState();
+  State<SearchRest> createState() => _SearchRestState();
 }
 
-class _GetStartedState extends State<GetStarted> {
+class _SearchRestState extends State<SearchRest> {
   @override
   void initState() {
     super.initState();
   }
+
+  String restName = "Burger King";
 
   double volume = 0.5;
   @override
@@ -53,36 +54,50 @@ class _GetStartedState extends State<GetStarted> {
           Positioned(
             top: height2 / 2 - 120,
             child: Text(
-              "Zomato Roulette",
+              "Name Any Restaurant",
               style: TextStyle(color: Colors.white, fontSize: 40),
             ),
           ),
           Positioned(
             top: height2 / 2 - 70,
             child: Text(
-              "Hungry? Cant Decide Where to Eat today?",
+              "We will do the rest for you",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),
-          
           Positioned(
-            bottom: 100,
-              child: GestureDetector(
-            onTap: () {
-              Navigator.of(context)
-                  .push(CupertinoPageRoute(builder: (_) => SearchRest()));
-            },
+            bottom: 200,
             child: Container(
+              height: 100,
+              width: restName.length * 60 < 200 ? 200 : restName.length * 60,
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.white),
                   borderRadius: BorderRadius.circular(20)),
-              padding: EdgeInsets.all(25),
-              child: Text(
-                "Get Started",
+              padding: EdgeInsets.all(40),
+              child: TextFormField(
+                textAlign: TextAlign.center,
+                initialValue: restName,
+                onChanged: (str) {
+                  setState(() {
+                    restName = str;
+                  });
+                },
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
-          ),),
+          ),
+          Positioned(
+              bottom: 100,
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white),
+                    borderRadius: BorderRadius.circular(20)),
+                padding: EdgeInsets.all(25),
+                child: Text(
+                  "Get Started",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              )),
         ]),
       ),
     );
