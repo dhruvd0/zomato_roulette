@@ -27,11 +27,16 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  bloc: ^8.0.1
   cached_network_image: ^3.1.0
+  cubit: ^0.1.2
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.0.0
   flutter_screenutil: ^5.0.0+2
+  fluttertoast: ^8.0.8
+  http: ^0.13.4
   video_player: ^2.2.5
 
 dev_dependencies:

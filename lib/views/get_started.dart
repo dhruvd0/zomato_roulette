@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zomato_roulette/views/enter_rest.dart';
+import 'package:zomato_roulette/views/gradient.dart';
 
 class GetStarted extends StatefulWidget {
   const GetStarted({Key? key}) : super(key: key);
@@ -31,25 +32,7 @@ class _GetStartedState extends State<GetStarted> {
         height: height2,
         child: Stack(alignment: Alignment.center, children: [
           Container(
-            decoration: BoxDecoration(
-              // Box decoration takes a gradient
-              gradient: LinearGradient(
-                // Where the linear gradient begins and ends
-                begin: Alignment.topLeft,
-                end: Alignment.bottomCenter,
-                // Add one stop for each color. Stops should increase from 0 to 1
-
-                colors: [
-                  // Colors are easy thanks to Flutter's Colors class.
-
-                  Colors.purple.shade800,
-                  Colors.purple.shade800,
-                  Colors.purple.shade900,
-                  Colors.purple.shade900,
-                  Colors.black,
-                ],
-              ),
-            ),
+            decoration: GradientBackGround()
           ),
           Positioned(
             top: height2 / 2 - 120,
