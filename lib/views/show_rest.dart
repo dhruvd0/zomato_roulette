@@ -47,17 +47,18 @@ class _ShowRestaurantsState extends State<ShowRestaurants> {
                 width: width2 / 2,
                 child: BlocBuilder<GetRest, RestState>(
                   builder: (context, state) {
+                    print(state.rests);
                     return ListView.builder(
-                    
                         physics: BouncingScrollPhysics(),
                         itemCount: state.rests.length,
                         shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
                         itemBuilder: (_, index) {
+                          print(state.rests[index]);
                           return Container(
                             width: width2 / 2,
                             color: Colors.white10,
                             margin: EdgeInsets.only(bottom: 20),
-                         
                             child: Row(
                               children: [
                                 Container(
@@ -69,14 +70,37 @@ class _ShowRestaurantsState extends State<ShowRestaurants> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: width2 / 10,
+                                  width: width2 / 15,
                                 ),
-                                Text(
-                                  state.rests[index].name,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      state.rests[index].name,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 30
+                                      ),
+                                    ),
+                                     SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                     "₹₹₹ "+ state.rests[index].cost,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 25),
+                                    ),
+                                     SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      state.rests[index].cuisine,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20),
+                                    ),
+                                  ],
                                 ),
+                                
                                 SizedBox(
                                   width: width2 / 10,
                                 ),

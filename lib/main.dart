@@ -8,6 +8,8 @@ import 'package:zomato_roulette/views/show_rest.dart';
 void main() {
   runApp(
     MaterialApp(
+      
+      debugShowCheckedModeBanner: false,
       title: "Zomato Roulette",
       home: MultiBlocProvider(
         providers: [BlocProvider(create: (_) => GetRest())],
