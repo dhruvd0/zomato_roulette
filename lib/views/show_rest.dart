@@ -45,7 +45,7 @@ class _ShowRestaurantsState extends State<ShowRestaurants> {
            
             Expanded(
               child: Container(
-                width: width2 / 2,
+                width: width2 / 1.5,
               color: Colors.green,
                 child: BlocBuilder<GetRest, RestState>(
                   builder: (context, state) {
