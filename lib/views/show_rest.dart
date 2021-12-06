@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zomato_roulette/cubit/getRestCubit.dart';
 import 'package:zomato_roulette/views/gradient.dart';
 
+var img =
+    "https://i.insider.com/5e67f635235c1804132502e3?width=700&format=jpeg&auto=webp";
+
 class ShowRestaurants extends StatefulWidget {
   const ShowRestaurants({Key? key}) : super(key: key);
 
@@ -16,7 +19,7 @@ class _ShowRestaurantsState extends State<ShowRestaurants> {
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      BlocProvider.of<GetRest>(context, listen: false).getRests();
+      // BlocProvider.of<GetRest>(context, listen: false).getRests();
     });
   }
 
@@ -33,18 +36,17 @@ class _ShowRestaurantsState extends State<ShowRestaurants> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 100,
+              height: height/10,
             ),
             Text(
               "Bon Appétit !",
               style: TextStyle(color: Colors.white, fontSize: 50),
             ),
-            SizedBox(
-              height: 100,
-            ),
+           
             Expanded(
               child: Container(
                 width: width2 / 2,
+              color: Colors.green,
                 child: BlocBuilder<GetRest, RestState>(
                   builder: (context, state) {
                     print(state.rests);
@@ -55,6 +57,9 @@ class _ShowRestaurantsState extends State<ShowRestaurants> {
                         scrollDirection: Axis.vertical,
                         itemBuilder: (_, index) {
                           print(state.rests[index]);
+
+                          var rest = state.rests[index];
+                        
                           return Container(
                             width: width2 / 2,
                             color: Colors.white10,
@@ -63,11 +68,22 @@ class _ShowRestaurantsState extends State<ShowRestaurants> {
                               children: [
                                 Container(
                                   height: height / 5,
-                                  child: CachedNetworkImage(
-                                    fit: BoxFit.cover,
-                                    imageUrl:
-                                        "https://i.insider.com/5e67f635235c1804132502e3?width=700&format=jpeg&auto=webp",
-                                  ),
+                                  child: FutureBuilder<String?>(
+                                      future:  getRestURL(rest.name),
+                                      builder: (context, snapshot) {
+                                        if (!snapshot.hasData) {
+                                          return CachedNetworkImage(
+                                              fit: BoxFit.cover, imageUrl: img);
+                                        }
+                                        String imgURL = snapshot.data!;
+                                        return CachedNetworkImage(
+                                          fit: BoxFit.cover,
+                                          imageUrl: (imgURL == null ||
+                                                  (imgURL?.isEmpty ?? false))
+                                              ? img
+                                              : imgURL.toString(),
+                                        );
+                                      }),
                                 ),
                                 SizedBox(
                                   width: width2 / 15,
@@ -78,19 +94,17 @@ class _ShowRestaurantsState extends State<ShowRestaurants> {
                                     Text(
                                       state.rests[index].name,
                                       style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 30
-                                      ),
+                                          color: Colors.white, fontSize: 30),
                                     ),
-                                     SizedBox(
+                                    SizedBox(
                                       height: 10,
                                     ),
                                     Text(
-                                     "₹₹₹ "+ state.rests[index].cost,
+                                      "₹₹₹ " + state.rests[index].cost,
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 25),
                                     ),
-                                     SizedBox(
+                                    SizedBox(
                                       height: 10,
                                     ),
                                     Text(
@@ -100,7 +114,6 @@ class _ShowRestaurantsState extends State<ShowRestaurants> {
                                     ),
                                   ],
                                 ),
-                                
                                 SizedBox(
                                   width: width2 / 10,
                                 ),
