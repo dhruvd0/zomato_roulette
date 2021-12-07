@@ -30,6 +30,7 @@ class GetRest extends Cubit<RestState> {
       (index) => Restaurant(
         cuisine: "North Indian",
         name: names[index],
+        rating: "4.0",
         cost: ((index + 1) * 100).toString(),
       ),
     );
@@ -37,30 +38,39 @@ class GetRest extends Cubit<RestState> {
   }
 
   Future<bool> getRests() async {
-    String baseURL =
-        "http://9e02-34-80-76-85.ngrok.io/recommend/${state.enteredRest}";
+    String baseURL = "http://f93c-34-132-6-149.ngrok.io/";
+
+    String page = "/recommend/${state.enteredRest}";
     try {
-      Response response = await get(Uri.parse(baseURL));
+      Response response = await get(Uri.parse(baseURL + page));
       log(response.statusCode.toString());
       if (response.statusCode == 201) {
         Fluttertoast.showToast(msg: "Restaurant Not found");
-        return true;
+        return false;
       } else if (response.statusCode == 200) {
         Map body = jsonDecode(response.body);
-
-        print(body);
-
+        List<Restaurant> rests = [];
+        body.keys.toList().forEach((element) {
+          Restaurant restaurant = Restaurant(
+            name: element,
+            cost: body[element]["cost"].toString(),
+            cuisine: body[element]["cuisines"].toString(),
+            rating: body[element]["Mean Rating"].toString(),
+          );
+          rests.add(restaurant);
+        });
+        emit(state.copyWith(rests: rests));
         return true;
       } else {
         loadDummy();
-        Fluttertoast.showToast(msg: "Error");
-        return true;
+        Fluttertoast.showToast(msg: response.reasonPhrase.toString());
+        return false;
       }
     } catch (e) {
       loadDummy();
-      Fluttertoast.showToast(msg: "Error");
+      Fluttertoast.showToast(msg: e.toString());
 
-      return true;
+      return false;
     }
   }
 
@@ -92,11 +102,13 @@ class Restaurant {
   final String name;
   final String cost;
   final String cuisine;
+  final String rating;
   String? imgURL;
   Restaurant({
     required this.name,
     required this.cost,
     required this.cuisine,
+    required this.rating,
     this.imgURL,
   });
 
@@ -104,12 +116,14 @@ class Restaurant {
     String? name,
     String? cost,
     String? cuisine,
+    String? rating,
     String? imgURL,
   }) {
     return Restaurant(
       name: name ?? this.name,
       cost: cost ?? this.cost,
       cuisine: cuisine ?? this.cuisine,
+      rating: rating ?? this.rating,
       imgURL: imgURL ?? this.imgURL,
     );
   }

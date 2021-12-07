@@ -42,11 +42,13 @@ class _ShowRestaurantsState extends State<ShowRestaurants> {
               "Bon Appétit !",
               style: TextStyle(color: Colors.white, fontSize: 50),
             ),
-           
+             SizedBox(
+              height: 20,
+            ),
             Expanded(
               child: Container(
                 width: width2 / 1.5,
-              color: Colors.green,
+              
                 child: BlocBuilder<GetRest, RestState>(
                   builder: (context, state) {
                     print(state.rests);
@@ -111,6 +113,20 @@ class _ShowRestaurantsState extends State<ShowRestaurants> {
                                       state.rests[index].cuisine,
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 20),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.star,color: Colors.yellow,),
+                                        SizedBox(width: 10,),
+                                        Text(
+                                          state.rests[index].rating,
+                                          style: TextStyle(
+                                              color: Colors.white, fontSize: 20),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
